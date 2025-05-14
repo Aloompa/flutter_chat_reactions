@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class StackedReactions extends StatelessWidget {
@@ -27,33 +30,39 @@ class StackedReactions extends StatelessWidget {
     final reactionsToShow =
         reactions.length > 5 ? reactions.sublist(0, 5) : reactions;
 
-    // Calculate the remaining number of reactions (if any)
-    final remaining = reactions.length - reactionsToShow.length;
-
     // Helper function to create a reaction widget with proper styling
     Widget createReactionWidget(String reaction, int index) {
       final leftOffset = size - stackedValue;
 
       return Container(
         margin: EdgeInsets.only(left: leftOffset * index),
-        padding: const EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+        padding: const EdgeInsets.fromLTRB(5.0, 3.0, 5.0, 3.0),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.background,
+          color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(25)),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).colorScheme.onBackground,
-              offset: const Offset(0.0, 1.0),
-              blurRadius: 6.0,
-            ),
+                color: Colors.black.withOpacity(0.15),
+                offset: const Offset(0.0, 0.3),
+                blurRadius: 3.0,
+                spreadRadius: 0.5),
           ],
         ),
-        child: Center(
+        child: Align(
+          alignment: const Alignment(0, 0),
           child: Material(
             color: Colors.transparent,
-            child: Text(
-              reaction,
-              style: TextStyle(fontSize: size),
+            child: Transform.translate(
+              offset: (!kIsWeb && Platform.isIOS)
+                  ? const Offset(1, -1)
+                  : Offset.zero,
+              child: Text(
+                reaction,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: size,
+                ),
+              ),
             ),
           ),
         ),
@@ -77,35 +86,6 @@ class StackedReactions extends StatelessWidget {
                     ? reactionWidgets.reversed.toList()
                     : reactionWidgets,
               ),
-              // Show remaining count only if there are more than 5 reactions
-              if (remaining > 0)
-                Container(
-                  padding: const EdgeInsets.all(2.0),
-                  margin: const EdgeInsets.all(2.0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.background,
-                    borderRadius: const BorderRadius.all(Radius.circular(25)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Theme.of(context).colorScheme.onBackground,
-                        offset: const Offset(0.0, 1.0),
-                        blurRadius: 6.0,
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          '+$remaining',
-                          style: const TextStyle(fontSize: 12),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
             ],
           );
   }

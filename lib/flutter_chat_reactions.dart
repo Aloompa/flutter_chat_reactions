@@ -55,28 +55,25 @@ class _ReactionsDialogWidgetState extends State<ReactionsDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 20.0, left: 20.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // reactions
-              buildReactions(context),
-              const SizedBox(
-                height: 10,
-              ),
-              // message
-              buildMessage(),
-              const SizedBox(
-                height: 10,
-              ),
-              // context menu
-              buildMenuItems(context),
-            ],
-          ),
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20.0, left: 20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // reactions
+            buildReactions(context),
+            const SizedBox(
+              height: 10,
+            ),
+            // message
+            buildMessage(),
+            const SizedBox(
+              height: 10,
+            ),
+            // context menu
+            buildMenuItems(context),
+          ],
         ),
       ),
     );
@@ -91,7 +88,7 @@ class _ReactionsDialogWidgetState extends State<ReactionsDialogWidget> {
         child: Container(
           width: MediaQuery.of(context).size.width * widget.menuItemsWidth,
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
@@ -192,7 +189,7 @@ class _ReactionsDialogWidgetState extends State<ReactionsDialogWidget> {
         child: Container(
           padding: const EdgeInsets.all(5),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.background,
+            color: Colors.white,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
